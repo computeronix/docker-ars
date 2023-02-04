@@ -42,6 +42,7 @@ RUN apt-get update && apt-get install -y wget jq unzip \
   && printf "ln -sf ${GBMOUNT}/ARS/USR_VARS.ini ${GBINSTALLLOC}/ARS/USR_VARS.ini\n" >> gunbot/custom.sh \
   #check for config.py file
   && printf "if [ ! -f ${GBMOUNT}/ARS/config.py ]; then \n" >> gunbot/custom.sh \
+  && printf "wget -q -nv -O /tmp/config.py https://raw.githubusercontent.com/computeronix/docker-ars/master/config_example.py \n" >> gunbot/custom.sh \
   && printf "cp /tmp/config.py ${GBMOUNT}/ARS/config.py\n" >> gunbot/custom.sh \
   && printf "fi\n" >> gunbot/custom.sh \
   && printf "ln -sf ${GBMOUNT}/ARS/config.py ${GBINSTALLLOC}/ARS/config.py\n" >> gunbot/custom.sh \
@@ -78,11 +79,10 @@ LABEL \
   description="${DESCRIPTION}"
 
 COPY --from=ars-builder /tmp/gunbot ${GBINSTALLLOC}
-COPY config.py /tmp/config.py
 
 WORKDIR ${GBINSTALLLOC}
 
-RUN apt-get update && apt-get install -y chrony jq unzip openssl python \
+RUN apt-get update && apt-get install -y chrony jq unzip openssl wget python \
   && rm -rf /var/lib/apt/lists/* \
   && chmod +x "${GBINSTALLLOC}/custom.sh" \
   && chmod +x "${GBINSTALLLOC}/runner.sh" \
