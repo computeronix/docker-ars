@@ -4,7 +4,7 @@ ARG GITHUBREPO="ARS"
 ARG GBINSTALLLOC="/opt/gunbot"
 ARG GBMOUNT="/mnt/gunbot"
 ARG ARS="ARS_lin.zip"
-ARG GUNBOTVERSION="latest"
+ARG GUNBOTVERSION
 ARG GBPORT=5000
 ARG MAINTAINER="computeronix"
 ARG WEBSITE="https://hub.docker.com/r/computeronix/ars"
@@ -65,7 +65,7 @@ RUN apt-get update && apt-get install -y wget jq unzip \
   && printf "${GBINSTALLLOC}/ARS/mm_anti_rekt\n" >> gunbot/runner.sh
 
 #BUILD THE RUN IMAGE
-FROM --platform="linux/amd64" computeronix/gunbot:latest
+FROM --platform="linux/amd64" computeronix/gunbot:${GUNBOTVERSION}
 ARG MAINTAINER
 ARG WEBSITE
 ARG DESCRIPTION
