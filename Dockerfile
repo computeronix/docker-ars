@@ -82,9 +82,8 @@ COPY --from=ars-builder /tmp/gunbot ${GBINSTALLLOC}
 
 WORKDIR ${GBINSTALLLOC}
 
-RUN apt-get update && apt-get install -y chrony jq unzip openssl wget python \
+RUN apt-get update && apt-get install -y wget python \
   && rm -rf /var/lib/apt/lists/* \
-  && chmod +x "${GBINSTALLLOC}/custom.sh" \
   && chmod +x "${GBINSTALLLOC}/runner.sh" \
   && chmod +x "${GBINSTALLLOC}/ARS/mm_anti_rekt"
 
