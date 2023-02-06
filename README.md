@@ -1,4 +1,5 @@
 
+  
 
 # (Unofficial) ARS Docker Container
 
@@ -22,7 +23,7 @@
 
 The docker container will allow for a ARS setup, in less than a minute, allowing full customizations, while providing one with the latest versions, at all times.
 
->TIP: you will still need to configure [ARS per the documentation on their site](https://ars-team-wiki.gitbook.io/wikitemp/start-here/introduction).
+>TIP: you will still need to configure ARS prior to running it fully in the container.
 
 ### Highlights
 
@@ -35,7 +36,7 @@ Key capabilities of this ARS container:
 - Multi-platform support ( `amd64` and `arm64` )
 
 # What is ARS
-ARS is an add-on module for Gunbot. [Read about ARS here](https://ars-team-wiki.gitbook.io/wikitemp/start-here/what-does-ars-do).
+ARS is an add-on module for Gunbot. [Read about ARS here](https://marketplace.gunthy.io/for-gunbot-market-maker/ars-intelligent-trend-algo).
 
 Gunbot is an easy to use, advanced crypto trading bot. You define or select a trading strategy and watch Gunbot trade. Enabling you to get up to hundreds of profitable trades per day, 24/7.
 
@@ -54,7 +55,7 @@ Gunbot requires licensing to run and please check out the latest licensing detai
 To acquire a license, please reach out to a [Gunbot Reseller](https://gunthy.org/resellers/) for more information.
 
 ### Docker Hub Repo
-Access the [Docker Hub](https://hub.docker.com/r/computeronix/zyb0t) to review tags and all the details of the container.
+Access the [Docker Hub](https://hub.docker.com/r/computeronix/ars) to review tags and all the details of the container.
 
 ### Quick Start
 For the automated, quick start route, with your container tool, simply run
@@ -89,7 +90,6 @@ The detailed documentation on how to use the container, background, future roadm
 
 ### Need Help or Have Feedback with Gunbot Docker?
 
- - Review the [ARS documentation](https://ars-team-wiki.gitbook.io/wikitemp/start-here/introduction) for setup
- - Join the Telegram Community, ask the Gunbot School for access.
+ - Review the ARS documentation for setup, ask crazymop or bestnaf for a copy of it
+ - Join the Telegram Community, ask crazymop or bestnaf for access to it.
  - Submit issues/feedback/feature requests at the GitHub site, under [issues](https://github.com/computeronix/docker-ars/issues).
- 
