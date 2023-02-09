@@ -46,6 +46,8 @@ RUN apt-get update && apt-get install -y wget jq unzip \
   && printf "cp /tmp/config.py ${GBMOUNT}/ARS/config.py\n" >> gunbot/custom.sh \
   && printf "fi\n" >> gunbot/custom.sh \
   && printf "ln -sf ${GBMOUNT}/ARS/config.py ${GBINSTALLLOC}/ARS/config.py\n" >> gunbot/custom.sh \
+  #check for gunbot_console.log file
+  && printf "ln -sf ${GBMOUNT}/gunbot_console.log ${GBINSTALLLOC}/gunbot_console.log\n" >> gunbot/custom.sh \
   #inject config -> MM_PATH -> /opt/gunbot
   && printf "input=\"/opt/gunbot/ARS/USR_VARS.ini\"\n" >> gunbot/custom.sh \
   && printf "while IFS= read -r line\n" >> gunbot/custom.sh \
@@ -59,9 +61,10 @@ RUN apt-get update && apt-get install -y wget jq unzip \
   #overwrite runner.sh bash script
   && printf "#!/bin/bash\n" > gunbot/runner.sh \
   #run gunbot
-  && printf "${GBINSTALLLOC}/gunthy-linux &\n" >> gunbot/runner.sh \
-  #run ars
+  && printf "${GBINSTALLLOC}/gunthy-linux > gunbot_console.log 2>&1 &" >> gunbot/runner.sh \
+  #change working directory to ars
   && printf "cd ${GBINSTALLLOC}/ARS\n" >> gunbot/runner.sh \
+  #run ars
   && printf "${GBINSTALLLOC}/ARS/mm_anti_rekt\n" >> gunbot/runner.sh
 
 #BUILD THE RUN IMAGE
