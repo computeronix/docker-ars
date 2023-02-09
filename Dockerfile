@@ -53,7 +53,7 @@ RUN apt-get update && apt-get install -y wget jq unzip \
   && printf "while IFS= read -r line\n" >> gunbot/custom.sh \
   && printf "do\n" >> gunbot/custom.sh \
   && printf "if [[ \"\${line}\" == *\"MM_PATH\"* ]]; then\n" >> gunbot/custom.sh \
-  && printf "  line=\"MM_PATH = /opt/gunbot\"\n" >> gunbot/custom.sh \
+  && printf "  line=\"MM_PATH = ${GBINSTALLLOC}\"\n" >> gunbot/custom.sh \
   && printf "fi\n" >> gunbot/custom.sh \
   && printf "echo \"\${line}\" >> /tmp/USR_VARS_tmp.ini\n" >> gunbot/custom.sh \
   && printf "done < \"\${input}\"\n" >> gunbot/custom.sh \
