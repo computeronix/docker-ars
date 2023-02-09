@@ -48,8 +48,8 @@ RUN apt-get update && apt-get install -y wget jq unzip \
   && printf "ln -sf ${GBMOUNT}/ARS/config.py ${GBINSTALLLOC}/ARS/config.py\n" >> gunbot/custom.sh \
   #check for gunbot_console.log file
   && printf "ln -sf ${GBMOUNT}/gunbot_console.log ${GBINSTALLLOC}/gunbot_console.log\n" >> gunbot/custom.sh \
-  #inject config -> MM_PATH -> /opt/gunbot
-  && printf "input=\"/opt/gunbot/ARS/USR_VARS.ini\"\n" >> gunbot/custom.sh \
+  #inject config -> MM_PATH -> gunbot location
+  && printf "input=\"${GBINSTALLLOC}/ARS/USR_VARS.ini\"\n" >> gunbot/custom.sh \
   && printf "while IFS= read -r line\n" >> gunbot/custom.sh \
   && printf "do\n" >> gunbot/custom.sh \
   && printf "if [[ \"\${line}\" == *\"MM_PATH\"* ]]; then\n" >> gunbot/custom.sh \
@@ -57,7 +57,7 @@ RUN apt-get update && apt-get install -y wget jq unzip \
   && printf "fi\n" >> gunbot/custom.sh \
   && printf "echo \"\${line}\" >> /tmp/USR_VARS_tmp.ini\n" >> gunbot/custom.sh \
   && printf "done < \"\${input}\"\n" >> gunbot/custom.sh \
-  && printf "mv /tmp/USR_VARS_tmp.ini ${GBINSTALLLOC}/ARS/USR_VARS.ini\n" >> gunbot/custom.sh \
+  && printf "cat /tmp/USR_VARS_tmp.ini > ${GBINSTALLLOC}/ARS/USR_VARS.ini\n" >> gunbot/custom.sh \
   #overwrite runner.sh bash script
   && printf "#!/bin/bash\n" > gunbot/runner.sh \
   #run gunbot
