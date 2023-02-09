@@ -48,6 +48,8 @@ RUN apt-get update && apt-get install -y wget jq unzip \
   && printf "ln -sf ${GBMOUNT}/ARS/config.py ${GBINSTALLLOC}/ARS/config.py\n" >> gunbot/custom.sh \
   #check for gunbot_console.log file
   && printf "ln -sf ${GBMOUNT}/gunbot_console.log ${GBINSTALLLOC}/gunbot_console.log\n" >> gunbot/custom.sh \
+  #ensuring fresh /tmp/USR_VARS_tmp.ini
+  && printf "rm -rf /tmp/USR_VARS_tmp.ini\n" >> gunbot/custom.sh \
   #inject config -> MM_PATH -> gunbot location
   && printf "input=\"${GBINSTALLLOC}/ARS/USR_VARS.ini\"\n" >> gunbot/custom.sh \
   && printf "while IFS= read -r line\n" >> gunbot/custom.sh \
