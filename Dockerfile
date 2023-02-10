@@ -1,3 +1,4 @@
+ARG DEBIANVERSION="bookworm"
 ARG ARSVERSION="latest"
 ARG GITHUBOWNER="bestnaf"
 ARG GITHUBREPO="ARS"
@@ -11,7 +12,7 @@ ARG WEBSITE="https://hub.docker.com/r/computeronix/ars"
 ARG DESCRIPTION="(Unofficial) ARS Docker Container - ${GUNBOTVERSION} - ${ARSVERSION}
 
 #SCRATCH WORKSPACE FOR BUILDING IMAGE
-FROM --platform="linux/amd64" debian:bullseye AS ars-builder
+FROM --platform="linux/amd64" debian:${DEBIANVERSION} AS ars-builder
 ARG ARSVERSION
 ARG GITHUBOWNER
 ARG GITHUBREPO
@@ -30,6 +31,15 @@ RUN apt-get update && apt-get install -y wget jq unzip \
   && unzip -d . ars.zip \
   && mkdir -p gunbot/ARS \
   && mv Lin/* gunbot/ARS \
+  #check for local replacement ars.zip and inject if so
+  && printf "if [ -f ${GBMOUNT}/ars.zip ]; then \n" >> gunbot/custom.sh \
+  && printf "   rm -rf ${GBINSTALLLOC}/Lin \n" >> gunbot/custom.sh \
+  && printf "   unzip -d ${GBINSTALLLOC} ${GBMOUNT}/ars.zip \n" >> gunbot/custom.sh \
+  && printf "   rm -rf ${GBINSTALLLOC}/ARS \n" >> gunbot/custom.sh \
+  && printf "   mkdir ${GBINSTALLLOC}/ARS \n" >> gunbot/custom.sh \
+  && printf "   cp -rf ${GBINSTALLLOC}/Lin/* ${GBINSTALLLOC}/ARS \n" >> gunbot/custom.sh \
+  && printf "   chmod +x ${GBINSTALLLOC}/ARS/mm_anti_rekt \n" >> gunbot/custom.sh \
+  && printf "fi\n" >> gunbot/custom.sh \
   #injecting into custom.sh
   #check for ARS directory BUT don't link it for persistence
   && printf "if [ ! -d ${GBMOUNT}/ARS ]; then \n" >> gunbot/custom.sh \
@@ -87,7 +97,7 @@ COPY --from=ars-builder /tmp/gunbot ${GBINSTALLLOC}
 
 WORKDIR ${GBINSTALLLOC}
 
-RUN apt-get update && apt-get install -y wget python \
+RUN apt-get update && apt-get install -y wget python3 \
   && rm -rf /var/lib/apt/lists/* \
   && chmod +x "${GBINSTALLLOC}/custom.sh" \
   && chmod +x "${GBINSTALLLOC}/runner.sh" \
